@@ -17,4 +17,14 @@ class LongUrlController extends Controller
 
         return response()->json($longUrls);
     }
+
+    // Find a long url by its ID
+    public function findById($id)
+    {
+        try {
+            return LongUrl::where('id', $id)->firstOrFail();
+        } catch (\Exception $e) {
+            throw new \Exception('No LongUrl was found with the provided id');
+        }
+    }
 }
