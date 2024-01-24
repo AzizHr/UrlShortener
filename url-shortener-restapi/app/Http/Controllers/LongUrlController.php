@@ -36,4 +36,18 @@ class LongUrlController extends Controller
         $longUrl = LongUrl::create($longUrlData);
         return response()->json(['message' => 'LongUrl saved successfully', 'id' => $longUrl->id]);
     }
+
+    // Get the most visited long url based on its shorten urls clicks
+    public function getTheMostVisited()
+    {
+        $mostVisited = LongUrl::with('shortUrls')->withCount('shortUrls')
+            ->orderByDesc('short_urls_count')
+            ->first();
+
+        if ($mostVisited == null) {
+            return response()->json(['message' => 'There are no urls to check']);
+        }
+
+        return response()->json(['mostVisisted' => $mostVisited]);
+    }
 }
