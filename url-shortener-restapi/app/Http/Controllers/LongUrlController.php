@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LongUrlRequest;
 use App\Models\LongUrl;
 
 class LongUrlController extends Controller
@@ -26,5 +27,13 @@ class LongUrlController extends Controller
         } catch (\Exception $e) {
             throw new \Exception('No LongUrl was found with the provided id');
         }
+    }
+
+    // Save a long url in the database
+    public function save(LongUrlRequest $request)
+    {
+        $longUrlData = $request->validated();
+        $longUrl = LongUrl::create($longUrlData);
+        return response()->json(['message' => 'LongUrl saved successfully', 'id' => $longUrl->id]);
     }
 }
