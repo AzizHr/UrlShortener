@@ -33,4 +33,14 @@ class ShortUrlController extends Controller
             return response()->json(['message' => $e->getMessage()], 404);
         }
     }
+
+    // Get a short url by its content
+    public function findByContent($content)
+    {
+        try {
+            return ShortUrl::where('content', $content)->firstOrFail();
+        } catch (\Exception $e) {
+            throw new \Exception('No ShortUrl was found with the provided content');
+        }
+    }
 }
