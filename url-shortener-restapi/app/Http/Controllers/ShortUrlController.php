@@ -62,4 +62,11 @@ class ShortUrlController extends Controller
             return response()->json(['message' => $e->getMessage()], 404);
         }
     }
+
+    // Increment the clicks by 1 each time the short url has been clicked
+    public function incrementClicks(ShortUrl $shortUrl)
+    {
+        $shortUrl->clicks += 1;
+        $shortUrl->save();
+    }
 }
